@@ -39,8 +39,8 @@ services:
     env_file:
       - .env
     environment:
-      DATABASE_URL: postgresql://evolution_user:Ardigital@2025@postgres:5432/evolution_db
-      CACHE_REDIS_URI: redis://:Ardigital%402025@redis:6379/6
+      DATABASE_URL: postgresql://evolution_user:arlabs@postgres:5432/evolution_db
+      CACHE_REDIS_URI: redis://:arlabs@redis:6379/6
     ports:
       - "8080:8080"
     volumes:
