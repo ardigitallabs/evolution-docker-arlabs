@@ -194,10 +194,10 @@ git clone https://github.com/ardigitallabs/evolution-docker-arlabs.git
 cd evolution-docker-arlabs
 
 # Subir os contêineres
-sudo docker-compose up -d
+sudo docker compose up -d
 
 # Verificar logs
-sudo docker-compose logs -f
+sudo docker compose logs -f
 ```
 
 ---
