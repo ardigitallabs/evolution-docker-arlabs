@@ -25,7 +25,7 @@ services:
     restart: always
     ports:
       - "6379:6379"
-    command: ["redis-server", "--requirepass", "Ardigital@2025"]
+    command: ["redis-server", "--requirepass", "arlabs"]
     networks:
       - evolution_network
 
