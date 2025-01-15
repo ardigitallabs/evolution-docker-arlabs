@@ -9,7 +9,7 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_USER: evolution_user
-      POSTGRES_PASSWORD: Ardigital@2025
+      POSTGRES_PASSWORD: arlabs
       POSTGRES_DB: evolution_db
     volumes:
       - ./data:/var/lib/postgresql/data
