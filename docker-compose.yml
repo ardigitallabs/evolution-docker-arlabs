@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_container
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: evolution_user
+      POSTGRES_PASSWORD: Ardigital@2025
+      POSTGRES_DB: evolution_db
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./config/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./config/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    networks:
+      - evolution_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_container
+    restart: always
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "Ardigital@2025"]
+    networks:
+      - evolution_network
+
+  evolution_api:
+    image: atendai/evolution-api:v2.1.1
+    container_name: evolution_api
+    restart: always
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://evolution_user:Ardigital@2025@postgres:5432/evolution_db
+      CACHE_REDIS_URI: redis://:Ardigital%402025@redis:6379/6
+    ports:
+      - "8080:8080"
+    volumes:
+      - evolution_instances:/evolution/instances
+    networks:
+      - evolution_network
+
+volumes:
+  evolution_instances:
+
+networks:
+  evolution_network:
+    driver: bridge
