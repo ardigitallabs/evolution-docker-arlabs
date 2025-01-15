@@ -2,7 +2,7 @@
 
 ### Passo a Passo: Instalação do Docker no Ubuntu Server
 
-Este guia detalha como instalar o Docker no **Ubuntu Server** usando o repositório oficial do Docker. Siga os passos abaixo:
+Este guia detalha como instalar o Docker no **Ubuntu Server** usando o repositório oficial do Docker e como iniciar o projeto **Evolution** utilizando o `docker-compose.yml` configurado.
 
 ---
 
@@ -107,8 +107,65 @@ sudo systemctl start docker
 
 ---
 
+### **7. Clonar o Repositório e Configurar o Projeto Evolution**
+
+#### **7.1. Clonar este repositório**
+No servidor onde o Docker foi instalado, clone o repositório do projeto:
+
+```bash
+git clone https://github.com/ardigitallabs/evolution-docker-arlabs.git
+cd evolution-docker-arlabs
+```
+
+#### **7.2. Configurar as pastas necessárias**
+Certifique-se de que a estrutura de pastas está configurada corretamente. O arquivo `docker-compose.yml` automaticamente cria a pasta `data` para armazenar os dados do PostgreSQL. Certifique-se de que os arquivos estão organizados assim:
+
+```plaintext
+.
+├── docker-compose.yml
+├── config
+│   ├── postgresql.conf
+│   ├── pg_hba.conf
+├── data/  # Criada automaticamente pelo Docker
+└── README.md
+```
+
+---
+
+### **8. Iniciar o Projeto Evolution**
+
+#### **8.1. Configurar o ambiente**
+Certifique-se de que o arquivo `.env` está configurado com as variáveis de ambiente necessárias para o projeto.
+
+#### **8.2. Subir os contêineres**
+Execute o seguinte comando para iniciar o projeto:
+
+```bash
+docker-compose up -d
+```
+
+Este comando iniciará todos os serviços definidos no `docker-compose.yml` (PostgreSQL, Redis e Evolution API) em segundo plano.
+
+#### **8.3. Verificar os logs**
+Para garantir que todos os contêineres estejam funcionando corretamente, veja os logs:
+
+```bash
+docker-compose logs -f
+```
+
+#### **8.4. Acessar o sistema**
+Se tudo estiver funcionando corretamente, o sistema Evolution estará acessível na porta `8080` (ou outra configurada no `docker-compose.yml`).
+
+Abra o navegador e acesse:
+
+```
+http://<seu_servidor>:8080
+```
+
+---
+
 ### **Resumo dos Comandos**
-Aqui está uma lista consolidada dos comandos usados no tutorial:
+Aqui está uma lista consolidada dos comandos usados neste guia:
 
 ```bash
 # Atualizar o sistema
@@ -132,13 +189,15 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 # Verificar instalação
 sudo docker run hello-world
 
-# (Opcional) Configurar Docker sem sudo
-sudo usermod -aG docker <seu_usuario>
-newgrp docker
+# Clonar repositório e configurar o projeto
+git clone https://github.com/ardigitallabs/evolution-docker-arlabs.git
+cd evolution-docker-arlabs
 
-# (Opcional) Habilitar Docker no boot
-sudo systemctl enable docker
-sudo systemctl start docker
+# Subir os contêineres
+sudo docker-compose up -d
+
+# Verificar logs
+sudo docker-compose logs -f
 ```
 
 ---
@@ -146,3 +205,6 @@ sudo systemctl start docker
 ### **Notas Importantes**
 - Este tutorial foi criado para **Ubuntu Server**, mas funciona em qualquer distribuição baseada no Ubuntu.
 - Caso utilize uma distribuição derivada (como Linux Mint), substitua `$(. /etc/os-release && echo "$VERSION_CODENAME")` por `$(lsb_release -sc)` ao adicionar o repositório Docker.
+- Para alterações no comportamento do PostgreSQL, edite os arquivos `config/postgresql.conf` e `config/pg_hba.conf` antes de subir os contêineres.
+
+Pronto! Agora você possui um ambiente completo para executar o projeto Evolution com Docker no Ubuntu Server.
