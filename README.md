@@ -141,7 +141,7 @@ Certifique-se de que o arquivo `.env` está configurado com as variáveis de amb
 Execute o seguinte comando para iniciar o projeto:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 Este comando iniciará todos os serviços definidos no `docker-compose.yml` (PostgreSQL, Redis e Evolution API) em segundo plano.
@@ -150,7 +150,7 @@ Este comando iniciará todos os serviços definidos no `docker-compose.yml` (Pos
 Para garantir que todos os contêineres estejam funcionando corretamente, veja os logs:
 
 ```bash
-docker-compose logs -f
+docker compose logs -f
 ```
 
 #### **8.4. Acessar o sistema**
